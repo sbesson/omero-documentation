@@ -30,20 +30,9 @@ title = project + u' Documentation'
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-if "OMERO_RELEASE" in os.environ and len(os.environ.get('OMERO_RELEASE')) > 0:
-    release = os.environ.get('OMERO_RELEASE')
-    [majornumber, minornumber, patchnumber] = split_release(release)
-
-    # Define Sphinx version and release variables and development branch
-    version = ".".join(str(x) for x in (majornumber, minornumber))
-
-    if patchnumber > 0:
-        tags.add('point_release')
-    previousversion = get_previous_version(majornumber, minornumber)
-else:
-    version = 'UNKNOWN'
-    previousversion = 'UNKNOWN'
-    release = 'UNKNOWN'
+release = '5.5.1'
+version = '5.5'
+previousversion = '5.4'
 
 rst_prolog = """
 """

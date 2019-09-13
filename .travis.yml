@@ -19,3 +19,15 @@ env:
 
 script:
   - make clean html
+  - tar -zcvf omero-documentation.tar.gz -C omero/_build/html/ ./
+  - tar -zcvf contributing.tar.gz -C contributing/_build/html/ ./
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file:
+    - omero-documentation.tar.gz
+    - contributing.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
