@@ -12,6 +12,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
+        depth: 0
       - name: Install Ice Java and Python binding
         uses: ome/action-ice@v3
       - name: Set up configuration
