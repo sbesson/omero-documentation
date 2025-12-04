@@ -27,6 +27,7 @@ jobs:
           git clone https://github.com/ome/omero-install
       - name: Download latest release of OMERO.server
         run: |
+          cd ..
           gh release download -R ome/openmicroscopy --pattern "OMERO.server*zip"
           unzip OMERO.server*.zip && rm OMERO.server*.zip
           ln -s OMERO.server* OMERO.server
