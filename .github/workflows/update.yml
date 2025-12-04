@@ -61,7 +61,7 @@ jobs:
             git commit -m "${{ steps.upstream_repo.outputs.value }}"
             git checkout -b autogen
             git push -u -f origin autogen
-            gh pr create --fill-verbose --title "Update generated documentation content"  --base develop --head autogen --label "include"
+            gh pr create --fill-verbose --title "Update generated documentation content"  --head autogen --label "include"
           else
             echo "No upstream changes to synchronize"
             exit 0
