@@ -37,7 +37,7 @@ jobs:
           $space/.venv3/bin/pip install https://github.com/glencoesoftware/zeroc-ice-py-ubuntu2204-x86_64/releases/download/20221004/zeroc_ice-3.6.5-cp310-cp310-linux_x86_64.whl
       - name: Update documentation
         run: |
-          WORKSPACE=$space BUILD=false SUFFIX=/dist bash autogen_omero.sh
+          WORKSPACE=$space bash autogen_omero.sh
       - name: Find modified files
         id: upstream_repo
         run: |
