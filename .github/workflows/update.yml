@@ -59,8 +59,8 @@ jobs:
           if [ "$(git status --porcelain)" ]; then
             git add *
             git commit -m "${{ steps.upstream_repo.outputs.value }}"
-            git push -u origin deps/upgrade-${{ matrix.dependency }}
-            gh pr create --fill --base develop --head deps/upgrade-${{ matrix.dependency }} --label "include"
+            git push -f origin deps/upgrade
+            gh pr create --fill --base develop --head deps/upgrade --label "include"
           else
             echo "No upstream changes to synchronize"
             exit 0
