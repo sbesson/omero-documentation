@@ -1,6 +1,7 @@
 name: Synchronize with upstream repositories
 
 on:
+  push:
   schedule:
     - cron: '* 0 * * *'
 jobs:
@@ -21,13 +22,13 @@ jobs:
           cd ..
           WORKSPACE=$(pwd)
           echo "space="${WORKSPACE} >> $GITHUB_ENV
-          git clone https://github.com/ome/openmicroscopy OMERO.server
           git clone https://github.com/ome/omeroweb-install
           git clone https://github.com/ome/omero-install
-      - name: Build OMERO.server
+      - name: Download latest release of OMERO.server
         run: |
-          cd $space/OMERO.server
-          ./build.py
+          gh release download -R ome/openmicroscopy --pattern "OMERO.server*zip"
+          unzip OMERO.server*.zip && rm OMERO.server*.zip
+          ln -s OMERO.server* OMERO.server
       - name: Create Virtual environment
         run: |
           python -m venv $space/.venv3
