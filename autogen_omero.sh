@@ -14,7 +14,7 @@ export USER=${USER:-$(whoami)}
 export OMERODIR=${WORKSPACE}/OMERO.server$SUFFIX
 export DOCVENV=${DOCVENV:-$WORKSPACE/.venv3}
 export PYTHON=${PYTHON:-python}
-export BUILD=${BUILD:-true}
+export BUILD=${BUILD:-false}
 
 # VARIABLES #1
 MESSAGE="Update auto-generated documentation"
