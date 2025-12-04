@@ -52,7 +52,6 @@ jobs:
           fi
           echo "value=$value" >> $GITHUB_OUTPUT
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
         # https://api.github.com/users/github-actions%5Bbot%5D
         run: |
           git config --local user.name "github-actions[bot]"
