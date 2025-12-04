@@ -58,7 +58,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ "$(git status --porcelain)" ]; then
             git add *
-            git commit -m ${{ steps.upstream_repo.outputs.value }}
+            git commit -m "${{ steps.upstream_repo.outputs.value }}"
             git push -u origin deps/upgrade-${{ matrix.dependency }}
             gh pr create --fill --base develop --head deps/upgrade-${{ matrix.dependency }} --label "include"
           else
