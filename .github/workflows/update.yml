@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       ICE_HOME: /opt/ice-3.6.5 # location where Ice is installed
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Ice Java and Python binding
