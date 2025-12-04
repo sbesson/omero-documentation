@@ -56,11 +56,12 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet HEAD ${{ github.ref }}; then
+          if [ "$(git status --porcelain)" ]; then
+            git add *
+            git commit -m ${{ steps.upstream_repo.outputs.value }}
+            git push -u origin deps/upgrade-${{ matrix.dependency }}
+            gh pr create --fill --base develop --head deps/upgrade-${{ matrix.dependency }} --label "include"
+          else
             echo "No upstream changes to synchronize"
             exit 0
           fi
-          git add *
-          git commit -m ${{ steps.upstream_repo.outputs.value }}
-          git push -u origin deps/upgrade-${{ matrix.dependency }}
-          gh pr create --fill --base develop --head deps/upgrade-${{ matrix.dependency }} --label "include"
