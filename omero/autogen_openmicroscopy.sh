@@ -16,7 +16,7 @@ export DOCVENV=${DOCVENV:-$WORKSPACE/.venv3}
 $DOCVENV/bin/pip install "omero-web[redis]"
 
 #echo "Generating configuration properties page"
-#$DOCVENV/bin/omero config parse --rst | sed "s|$SUFFIX||" | sed "s|$WORKSPACE|/home/omero|" > omero/sysadmins/config.rst
+$DOCVENV/bin/omero config parse --rst | sed "s|$WORKSPACE|/home/omero|" > omero/sysadmins/config.rst
 
 echo "Generating ldap setdn usage page"
 mkdir -p omero/downloads/ldap
@@ -36,5 +36,5 @@ rm OMERO*sql
 echo "Generating Web configuration templates"
 # Nginx / WSGI
 $DOCVENV/bin/omero config set omero.web.application_server wsgi-tcp
-$DOCVENV/bin/omero web config nginx | sed "s|$SUFFIX||" | sed "s|$WORKSPACE/OMERO.server|/opt/omero/web/omero-web|g" > omero/sysadmins/unix/install-web/nginx-omero.conf
-$DOCVENV/bin/omero web config nginx-location | sed "s|$SUFFIX||" | sed "s|$WORKSPACE/OMERO.server|/opt/omero/web/omero-web|g" | grep -v '^#' > omero/sysadmins/unix/install-web/nginx-location.conf
+$DOCVENV/bin/omero web config nginx | sed "s|$WORKSPACE/OMERO.server|/opt/omero/web/omero-web|g" > omero/sysadmins/unix/install-web/nginx-omero.conf
+$DOCVENV/bin/omero web config nginx-location | sed "s|$WORKSPACE/OMERO.server|/opt/omero/web/omero-web|g" | grep -v '^#' > omero/sysadmins/unix/install-web/nginx-location.conf
