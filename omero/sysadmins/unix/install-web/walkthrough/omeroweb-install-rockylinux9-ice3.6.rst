@@ -19,38 +19,30 @@ If required, first create a local system user omero-web and create directory::
     mkdir -p /opt/omero/web/omero-web/etc/grid
     chown -R omero-web /opt/omero/web/omero-web
 
-
-
 Installing prerequisites
 ------------------------
 
 **The following steps are run as root.**
 
-Enable CodeReady Linux Builder repository:
-
-Redhat::
-
-    subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
-
-
-Rocky::
-
-    dnf -y install 'dnf-command(config-manager)'
-
-    dnf config-manager --set-enabled crb
-
 
 Install dependencies::
 
-    cat <<EOF > /etc/yum.repos.d/nginx.repo
-    [nginx-stable]
-    name=nginx stable repo
-    baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
-    gpgcheck=1
-    enabled=1
-    gpgkey=https://nginx.org/keys/nginx_signing.key
-    module_hotfixes=true
-    EOF
+        if grep -q "Rocky" /etc/redhat-release; then
+            dnf -y install 'dnf-command(config-manager)'
+            dnf config-manager --set-enabled crb
+        fi
+        if grep -q "Red Hat" /etc/redhat-release; then
+            subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+        fi
+        cat <<EOF > /etc/yum.repos.d/nginx.repo
+        [nginx-stable]
+        name=nginx stable repo
+        baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+        gpgcheck=1
+        enabled=1
+        gpgkey=https://nginx.org/keys/nginx_signing.key
+        module_hotfixes=true
+        EOF
 
     dnf -y install git
 
@@ -61,7 +53,7 @@ Install dependencies::
     dnf -y install nginx
 
 
-*Optional*: if you wish to use the Redis cache, install Redis::
+*Recommended*: if you wish to use the Redis cache, install Redis::
 
     dnf -y install redis
 
@@ -75,10 +67,10 @@ Creating a virtual environment
 
 **The following steps are run as root.**
 
+
 Create the virtual environment. This is the recommended way to install OMERO.web::
 
     python3.12 -mvenv /opt/omero/web/venv3
-
 
 
 
@@ -227,7 +219,6 @@ Copy the generated configuration file into the NGINX configuration directory, di
 
     systemctl start nginx
 
-**The following steps are run as omero-web system user.**
 
 For production servers you may need to add additional directives to the configuration file, for example to enable `HTTPS <https://nginx.org/en/docs/http/configuring_https_servers.html>`_. As an alternative to manually modifying the generated file you can generate a minimal configuration and include this in your own manually created NGINX file, such as :file:`/etc/nginx/conf.d/omero-web.conf`:
 
@@ -250,15 +241,14 @@ Running OMERO.web
 
 Since OMERO.web 5.16.0, the package `whitenoise` is installed by default.
 
-**The following steps are run as root.**
 
-*Optional*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
+*Recommended*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
 
     /opt/omero/web/venv3/bin/pip install 'django-redis==5.0.0'
 
 **The following steps are run as the omero-web system user.**
 
-*Optional*: Configure the cache::
+*Recommended*: Configure the cache::
 
     omero config set omero.web.caches '{"default": {"BACKEND": "django_redis.cache.RedisCache","LOCATION": "redis://127.0.0.1:6379/0"}}'
     omero config set omero.web.session_engine 'django.contrib.sessions.backends.cache'

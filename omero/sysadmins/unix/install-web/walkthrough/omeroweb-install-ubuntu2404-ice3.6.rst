@@ -19,8 +19,6 @@ If required, first create a local system user omero-web and create directory::
     mkdir -p /opt/omero/web/omero-web/etc/grid
     chown -R omero-web /opt/omero/web/omero-web
 
-
-
 Installing prerequisites
 ------------------------
 
@@ -39,7 +37,7 @@ Install dependencies::
     apt-get -y install nginx
 
 
-*Optional*: if you wish to use the Redis cache, install Redis::
+*Recommended*: if you wish to use the Redis cache, install Redis::
 
     apt-get -y install redis-server
 
@@ -217,13 +215,13 @@ Running OMERO.web
 Since OMERO.web 5.16.0, the package `whitenoise` is installed by default.
 
 
-*Optional*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
+*Recommended*: Install `Django Redis <https://github.com/jazzband/django-redis>`_::
 
     /opt/omero/web/venv3/bin/pip install 'django-redis==5.0.0'
 
 **The following steps are run as the omero-web system user.**
 
-*Optional*: Configure the cache::
+*Recommended*: Configure the cache::
 
     omero config set omero.web.caches '{"default": {"BACKEND": "django_redis.cache.RedisCache","LOCATION": "redis://127.0.0.1:6379/0"}}'
     omero config set omero.web.session_engine 'django.contrib.sessions.backends.cache'
